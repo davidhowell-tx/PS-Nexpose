@@ -63,33 +63,40 @@ $Session = Connect-NPConsole -URI "https://Nexpose.URL.Or.IP:3780" -Credentials 
 ```
 
 ### Sites
-Get a Quick Site Listing.  Runs a single query to pull a small amount of information about all sites, as if you were navigating to the /site/listing.jsp page.
+Get a Quick Site Listing
+
+Single query, like navigating to the /site/listing.jsp page.
 ```
 Get-NPSite -Session $Session
 ```
 
-Get a verbose Site Listing.  Runs an additional query for every site in the context, as if you were navigating to every site's page at site.jsp?siteid={ID}, and clicking on the "manage site" button to view full information.
+Get a verbose Site Listing.
+Multiple queries, like navigating to every site's page at site.jsp?siteid={ID}, then clicking on the "manage site" button.
 ```
 Get-NPSite -Session $Session -Config
 ```
 
-Limit the context by specifying a site name filter.  Uses the -like switch, so wild cards do work.
+Get a verbose Site listing with a name filter
 ```
 Get-NPSite -Session $Session -Name "*Test*" -Config
 ```
 
-Limit the context to a specific site ID.
+Get information about a specific Site
 ```
 Get-NPSite -Session $Session -ID 1 -Config
 ```
 
 ### Reports
-Get a quick report listing. Runs a single query to pull a small amount of information about all reports, as if you were navigating to the /report/reports.jsp page.
+Get a quick report listing.
+
+Single query, like navigating to the /report/reports.jsp page.
 ```
 Get-NPReport -Session $Session
 ```
 
-Get a verbose report Listing.  Runs an additional query for every report in the context, as if you were navigating to every report's edit page.
+Get a verbose report Listing.
+
+Multiple queries, like navigating to every report's edit page.
 ```
 Get-NPReport -Session $Session -Config
 ```
@@ -99,4 +106,23 @@ Delete a report.
 **WARNING**: Does not [currently] request confirmation before deleting.
 ```
 Remove-NPReport -Session $Session -Id 1
+```
+
+### Asset Groups
+Get a quick Asset Group listing.
+Single query, like navigating to /asset/group/listing.jsp
+```
+Get-NPAssetGroup -Session $Session
+```
+
+Get a quick Asset Group listing with a name filter.
+```
+Get-NPAssetGroup -Session $Session -Name "*Windows*"
+```
+
+Delete an Asset Group.
+
+**WARNING**: Does not [currently] request confirmation before deleting.
+```
+Remove-NPAssetGroup -Session $Session -Id 1
 ```
