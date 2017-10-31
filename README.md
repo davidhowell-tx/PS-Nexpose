@@ -32,8 +32,11 @@ https://Nexpose.URL.Or.IP:3780
 ```
 
 Optionally, prompt for and save credentials to a local conf file.
+
 **WARNING**: Saving credentials to disk is not recommend as it is a security risk to do so.
+
 I utilize the ConvertFrom-SecureString commandlet to store the password in an encrypted format to mitigate the risk, but this still isn't recommended.
+
 https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertfrom-securestring?view=powershell-5.1
 ```
 Set-NPConfig -Credentials (Get-Credential)
