@@ -68,7 +68,7 @@ Get a Quick Site Listing.  Runs a single query to pull a small amount of informa
 Get-NPSite -Session $Session
 ```
 
-Get a verbose Site Listing.  Runs an additional query for every site in the context, as if you were navigating to every site's page at site.jsp?siteid=26, and clicking on the "manage site" button to view full information.
+Get a verbose Site Listing.  Runs an additional query for every site in the context, as if you were navigating to every site's page at site.jsp?siteid={ID}, and clicking on the "manage site" button to view full information.
 ```
 Get-NPSite -Session $Session -Config
 ```
