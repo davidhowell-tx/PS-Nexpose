@@ -13,6 +13,7 @@ Export-ModuleMember -Function Get-NPAsset
 Export-ModuleMember -Function Get-NPCredential
 # Reports
 Export-ModuleMember -Function Get-NPReport
+Export-ModuleMember -Function Remove-NPReport
 # Sites
 Export-ModuleMember -Function Get-NPSite
 # Scans

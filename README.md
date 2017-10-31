@@ -82,3 +82,21 @@ Limit the context to a specific site ID.
 ```
 Get-NPSite -Session $Session -ID 1 -Config
 ```
+
+### Reports
+Get a quick report listing. Runs a single query to pull a small amount of information about all reports, as if you were navigating to the /report/reports.jsp page.
+```
+Get-NPReport -Session $Session
+```
+
+Get a verbose report Listing.  Runs an additional query for every report in the context, as if you were navigating to every report's edit page.
+```
+Get-NPReport -Session $Session -Config
+```
+
+Delete a report.
+
+**WARNING**: Does not [currently] request confirmation before deleting.
+```
+Remove-NPReport -Session $Session -Id 1
+```
