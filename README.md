@@ -4,8 +4,10 @@ Interacts with various Nexpose APIs
 I found the APIs provided by Nexpose to be lacking in information, so decided to analyze the calls made by the browser when using the application. This module utilizes the same APIs the web application uses rather than the XML API.
 
 # STILL IN PROGRESS
-This module is nowhere near complete and is severely lacking. Time doesn't allow me to sit and fill in all the gaps, so development will be slow and as needed for my own means. A lot of the code is still being refined, and you may find some functions not yet exported by the module (as these are still being worked on).
+This module is nowhere near complete and is severely lacking.Time doesn't allow me to sit and fill in all the gaps, so development will be slow and as needed for my own means. A lot of the code is still being refined, and you may find some functions not yet exported by the module (as these are still being worked on).
+
 Testing has been minimal and only with my own use cases.
+
 Documentation for this module is also still in progress.
 
 # Getting Started
