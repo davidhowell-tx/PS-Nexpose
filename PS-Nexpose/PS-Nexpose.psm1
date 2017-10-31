@@ -7,6 +7,7 @@ Export-ModuleMember -Function Get-NPConfig
 Export-ModuleMember -Function Set-NPConfig
 # Asset Groups
 Export-ModuleMember -Function Get-NPAssetGroup
+Export-ModuleMember -Function Remove-NPAssetGroup
 # Assets / Devices
 Export-ModuleMember -Function Get-NPAsset
 # Credentials
