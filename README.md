@@ -37,6 +37,30 @@ Remove the saved configuration with the below
 Set-NPConfig -RemoveConfig
 ```
 
+
+
+# Asset Groups
+## Retrieving Asset Groups
+Search for an asset group
+`PS > Get-NPAssetGroup -Name 'ACME'`
+
+Return a specific asset group by ID
+`PS > Get-NPAssetGroup -ID {id}`
+
+Return a list of all asset groups
+`PS > Get-NPAssetGroup -All`
+
+## Creating a New Asset Group
+Generate the search criteria
+`PS > $SearchCriteria = New-NPSearchCriteria -Operator Any`
+
+Add search terms to the criteria
+`PS > $SearchCriteria | Add-NPSearchTerm -AssetName -Is "ACME"`
+`PS > $SearchCriteria | Add-NPSearchTerm -IPAddress -Is "192.168.1.50"`
+
+Create a new asset group with the search criteria
+`PS > New-NPAssetGroup -Name "ACME Servers" -Description "ACME Servers" -SearchCriteria $SearchCriteria -Type dynamic`
+
 # API - Commandlet Mapping
 ## Asset
 Name | API URI | Commandlet
