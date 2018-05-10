@@ -38,6 +38,7 @@ Set-NPConfig -RemoveConfig
 ```
 
 # API - Commandlet Mapping
+## Asset
 Name | API URI | Commandlet
 --- | --- | ---
 Assets | GET /api/3/assets | `Get-NPAsset`
@@ -65,6 +66,10 @@ Operating Systems | GET /api/3/operating_systems | `Get-NPOperatingSystem`
 Operating System | GET /api/3/operating_systems/{id} | `Get-NPOperatingSystem -ID {id}`
 Software | GET /api/3/software | `Get-NPSoftware`
 Software | GET /api/3/software/{id} | `Get-NPSoftware -ID {id}`
+
+## Asset Discovery
+Name | API URI | Commandlet
+--- | --- | ---
 Discovery Connections | GET /api/3/discovery_connections | `Get-NPDiscoveryConnection`
 Discovery Connection | GET /api/3/discovery_connections/{id} | `Get-NPDiscoveryConnection -ID {id}`
 Discovery Connection Reconnect | POST /api/3/discovery_connections/{id}/<br>connect | 
@@ -75,6 +80,10 @@ Sonar Query | GET /api/3/sonar_queries/{id} | `Get-NPSonarQuery -ID {id}`
 Sonar Query | PUT /api/3/sonar_queries/{id} |
 Sonar Query | DELETE /api/3/sonar_queries/{id} |
 Sonar Query Assets | GET /api/3/sonar_queries/{id}/assets |
+
+## Asset Group
+Name | API URI | Commandlet
+--- | --- | ---
 Asset Groups | GET /api/3/asset_groups | `Get-NPAssetGroup`
 Asset Groups | POST /api/3/asset_groups |
 Asset Group | GET /api/3/asset_groups/{id} | `Get-NPAssetGroup -ID {id}`
@@ -90,3 +99,111 @@ Asset Group Search Criteria | PUT /api/3/asset_groups/{id}/search_criteria |
 Asset Group Tags | GET /api/3/asset_groups/{id}/tags | `Get-NPAssetGroup -ID {id} -Properties 'Asset Group Tags'`<br>`Get-NPAssetGroup -Properties 'Asset Group Tags'`<br>`Get-NPAssetGroup -Properties All`
 Asset Group Tags | PUT /api/3/asset_groups/{id}/tags |
 Asset Group Tags | DELETE /api/3/asset_groups/{id}/tags |
+Asset Group Tag | PUT /api/3/asset_groups/{id}/tags/{tagId} |
+Asset Group Tag | DELETE /api/3/asset_groups/{id}/tags/{tagId} |
+Asset Group Users | GET /api/3/asset_groups/{id}/users | `Get-NPAssetGroup -ID {id} -Properties 'Asset Group Users'`<br>`Get-NPAssetGroup -Properties 'Asset Group Users'`<br>`Get-NPAssetGroup -Properties All`
+Asset Group Users | PUT /api/3/asset_groups/{id}/users |
+Asset Group User | PUT /api/3/asset_groups/{id}/users/{userId} |
+Asset Group User | DELETE /api/3/asset_groups/{id}/users/{userId} |
+
+## Credential
+Name | API URI | Commandlet
+--- | --- | ---
+Shared Credentials | GET /api/3/shared_credentials | `Get-NPSharedCredential`
+Shared Credentials | POST /api/3/shared_credentials | 
+Shared Credentials | DELETE /api/3/shared_credentials | 
+Shared Credential | GET /api/3/shared_credentials/{id} | `Get-NPSharedCredential -ID {id}`
+Shared Credential | PUT /api/3/shared_credentials/{id} |
+Shared Credential | DELETE /api/3/shared_credentials/{id} |
+
+## Policy
+Name | API URI | Commandlet
+--- | --- | ---
+Policies For Asset | GET /api/3/assets/{assetId}/policies |
+Policy Rules or Groups Directly Under Policy for Asset | GET /api/3/assets/{assetId}/policies/{policyId}/children |
+Policy Rules or Groups Directly Under Policy Group for Asset | GET /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/children |
+Policy Rules Under Policy Group For Asset | GET /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/rules |
+Policy Rules For Asset | GET /api/3/assets/{assetId}/policies/{policyId}/rules | 
+Policies | GET /api/3/policies | `Get-NPPolicy`
+Policy Rules or Groups Directly Under Policy | GET /api/3/policies/{id}/children | 
+Policy | GET /api/3/policies/{policyId} | `Get-NPPolicy -ID {policyId}`
+Policy Asset Results | GET /api/3/policies/{policyId}/assets | `Get-NPPolicy -ID {policyId} -Properties 'Policy Asset Results'`<br>`Get-NPPolicy -ID {policyId} -Properties All`<br>`Get-NPPolicy -Properties 'Policy Asset Results'`<br>`Get-NPPolicy -Properties All`
+Policy Asset Result | GET /api/3/policies/{policyId}/assets/{assetId} |
+
+TODO: Finish table
+
+## Policy Override
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Remediation
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Report
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Scan
+Name | API URI | Commandlet
+--- | --- | ---
+Scans | GET /api/3/scans | `Get-NPScan`
+Scan | GET /api/3/scans/{id} | `Get-NPScan -ID {id}`
+Scan Status | POST /api/3/scans/{id}/{status} | 
+Site Scans | GET /api/3/sites/{id}/scans | `Get-NPScan -SiteID {siteId}`
+Site Scans | POST /api/3/sites/{id}/scans | 
+
+## Scan Engine
+Name | API URI | Commandlet
+--- | --- | ---
+Engine Pools | GET /api/3/scan_engine_pools | `Get-NPScanEnginePool`
+
+TODO: Finish Table
+
+## Scan Template
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Site
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Tag
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## User
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Vulnerability
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Vulnerability Check
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
+
+## Vulnerability Exception
+Name | API URI | Commandlet
+--- | --- | ---
+
+TODO: Finish Table
