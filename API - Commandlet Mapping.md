@@ -1,4 +1,3 @@
-# API - Commandlet Mapping
 ## Asset
 Name | API URI | Commandlet
 --- | --- | ---
