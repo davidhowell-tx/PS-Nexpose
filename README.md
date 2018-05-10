@@ -119,11 +119,11 @@ Shared Credential | DELETE /api/3/shared_credentials/{id} |
 ## Policy
 Name | API URI | Commandlet
 --- | --- | ---
-Policies For Asset | GET /api/3/assets/{assetId}/policies |
-Policy Rules or Groups Directly Under Policy for Asset | GET /api/3/assets/{assetId}/policies/{policyId}/children |
-Policy Rules or Groups Directly Under Policy Group for Asset | GET /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/children |
-Policy Rules Under Policy Group For Asset | GET /api/3/assets/{assetId}/policies/{policyId}/groups/{groupId}/rules |
-Policy Rules For Asset | GET /api/3/assets/{assetId}/policies/{policyId}/rules | 
+Policies For Asset | GET /api/3/assets/{assetId}<br>/policies |
+Policy Rules or Groups Directly Under Policy for Asset | GET /api/3/assets/{assetId}<br>/policies/{policyId}/children |
+Policy Rules or Groups Directly Under Policy Group for Asset | GET /api/3/assets/{assetId}<br>/policies/{policyId}/groups<br>/{groupId}/children |
+Policy Rules Under Policy Group For Asset | GET /api/3/assets/{assetId}<br>/policies/{policyId}/groups<br>/{groupId}/rules |
+Policy Rules For Asset | GET /api/3/assets/{assetId}<br>/policies/{policyId}/rules | 
 Policies | GET /api/3/policies | `Get-NPPolicy`
 Policy Rules or Groups Directly Under Policy | GET /api/3/policies/{id}/children | 
 Policy | GET /api/3/policies/{policyId} | `Get-NPPolicy -ID {policyId}`
