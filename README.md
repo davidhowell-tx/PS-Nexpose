@@ -35,6 +35,7 @@ System.Management.Automation.PSCredential https://nexpose.domain.local:3780
 Remove the saved configuration with the below
 ```
 Set-NPConfig -RemoveConfig
+```
 
 # API - Commandlet Mapping
 API | HTTP Method | API URI | Commandlet
