@@ -3,15 +3,20 @@ PowerShell module used to interact with various Nexpose APIs
 
 This module is currently being converted to use the v3 API introduced in version 6.5 (January 10, 2018)
 
-# Getting Started
-## Install/Uninstall
-I've provided some simple scripts to aid installing and uninstalling the module so that it is loaded when you start PowerShell.
-Just execute Install-Module.ps1 or Uninstall-Module.ps1.  These scripts just add or remove the module to your PSModulePath.
+# Install/Uninstall
+If you want this module to load every time you start PowerShell, use the install scripts
+```
+PS > .\Install-Module.ps1
+```
+If you want to remove it, run the uninstall script or simply delete it from your PSModulePath
+```
+PS > .\Uninstall-Module.ps1
+```
 
-## Importing Module
+# Importing Module
 If you don't want to install the module to your PSModulePath, you can simply import it by running
 ```PowerShell
-PS > Import-Module .\PS-Nexpose.psm1
+PS > Import-Module .\PS-Nexpose\PS-Nexpose.psm1
 ```
 
 # Saving Nexpose Configuration
