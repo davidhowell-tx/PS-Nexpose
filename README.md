@@ -1,128 +1,47 @@
 # PS-Nexpose
-Interacts with various Nexpose APIs
+PowerShell module used to interact with various Nexpose APIs
 
-I found the APIs provided by Nexpose to be lacking in information, so decided to analyze the calls made by the browser when using the application. This module utilizes the same APIs the web application uses rather than the XML API.
-
-# STILL IN PROGRESS
-This module is nowhere near complete and is severely lacking.Time doesn't allow me to sit and fill in all the gaps, so development will be slow and as needed for my own means. A lot of the code is still being refined, and you may find some functions not yet exported by the module (as these are still being worked on).
-
-Testing has been minimal and only with my own use cases.
-
-Documentation for this module is also still in progress.
+This module is currently being converted to use the v3 API introduced in version 6.5 (January 10, 2018)
 
 # Getting Started
-Import the Module
-```
-Import-Module .\PS-Nexpose.psm1
+## Install/Uninstall
+I've provided some simple scripts to aid installing and uninstalling the module so that it is loaded when you start PowerShell.
+Just execute Install-Module.ps1 or Uninstall-Module.ps1.  These scripts just add or remove the module to your PSModulePath.
+
+## Importing Module
+If you don't want to install the module to your PSModulePath, you can simply import it by running
+```PowerShell
+PS > Import-Module .\PS-Nexpose.psm1
 ```
 
-### Configuration File / Saved Settings
-Save the URI to a local conf file (stored in User's AppData)
-```
-Set-NPConfig -URI "https://Nexpose.URL.Or.IP:3780"
+# Saving Nexpose Configuration
+It's annoying to specify the Nexpose URI and credentials every time you interact with the API.  If you wish, you can choose to save this configuration to disk.
+NOTE: Passwords are saved in an encrypted standard string by using the ConvertFrom-SecureString commandlet.
+
+Below is an example of saving your configuration. You will be prompted for the credentials so that you don't have to type them in clear text into PowerShell.
+```PowerShell
+PS > Set-NPConfig -URI "https://nexpose.domain.local:3780" -Credentials (Get-Credential)
 ```
 
-Check the saved URI
-```
-Get-NPConfig
+View the saved configuration
+```PowerShell
+PS > Get-NPConfig
 
-URI
----
-https://Nexpose.URL.Or.IP:3780
-```
-
-Optionally, prompt for and save credentials to a local conf file.
-
-**WARNING**: Saving credentials to disk is not recommend as it is a security risk to do so.
-
-I utilize the ConvertFrom-SecureString commandlet to store the password in an encrypted format to mitigate the risk, but this still isn't recommended.
-
-https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertfrom-securestring?view=powershell-5.1
-```
-Set-NPConfig -Credentials (Get-Credential)
+Credentials                               URI
+-----------                               ---
+System.Management.Automation.PSCredential https://nexpose.domain.local:3780
 ```
 
-Check the saved configuration
+Remove the saved configuration with the below
 ```
-Get-NPConfig | Format-List
+Set-NPConfig -RemoveConfig
 
-Username : test
-Password : System.Security.SecureString
-URI      : https://Nexpose.URL.Or.IP:3780
-```
-
-### Session
-Establish a Session with saved URI and Credentials
-```
-$Session = Connect-NPConsole
-```
-
-Establish a Session, prompt for Credentials
-```
-$Session = Connect-NPConsole -URI "https://Nexpose.URL.Or.IP:3780" -Credentials (Get-Credential)
-```
-
-### Sites
-Get a Quick Site Listing
-
-Single query, like navigating to the /site/listing.jsp page.
-```
-Get-NPSite -Session $Session
-```
-
-Get a verbose Site Listing.
-Multiple queries, like navigating to every site's page at site.jsp?siteid={ID}, then clicking on the "manage site" button.
-```
-Get-NPSite -Session $Session -Config
-```
-
-Get a verbose Site listing with a name filter
-```
-Get-NPSite -Session $Session -Name "*Test*" -Config
-```
-
-Get information about a specific Site
-```
-Get-NPSite -Session $Session -ID 1 -Config
-```
-
-### Reports
-Get a quick report listing.
-
-Single query, like navigating to the /report/reports.jsp page.
-```
-Get-NPReport -Session $Session
-```
-
-Get a verbose report Listing.
-
-Multiple queries, like navigating to every report's edit page.
-```
-Get-NPReport -Session $Session -Config
-```
-
-Delete a report.
-
-**WARNING**: Does not [currently] request confirmation before deleting.
-```
-Remove-NPReport -Session $Session -Id 1
-```
-
-### Asset Groups
-Get a quick Asset Group listing.
-Single query, like navigating to /asset/group/listing.jsp
-```
-Get-NPAssetGroup -Session $Session
-```
-
-Get a quick Asset Group listing with a name filter.
-```
-Get-NPAssetGroup -Session $Session -Name "*Windows*"
-```
-
-Delete an Asset Group.
-
-**WARNING**: Does not [currently] request confirmation before deleting.
-```
-Remove-NPAssetGroup -Session $Session -Id 1
-```
+# API - Commandlet Mapping
+API | HTTP Method | API URI | Commandlet
+--- | --- | --- | ---
+Assets | GET | /api/3/assets | `Get-NPAsset`
+Assets | POST | /api/3/sites/{id}/assets | ``
+Asset Search | POST | /api/3/assets/search | ``
+Asset | GET | /api/3/assets/{id} | `Get-NPAsset -ID {id}`
+Asset | DELETE | /api/3/assets/{id} | ``
+Asset | GET | /api/3/assets/{id}/databases | `Get-NPAsset -ID {id} -Properties Databases`<br>`Get-NPAsset -Properties Databases`
