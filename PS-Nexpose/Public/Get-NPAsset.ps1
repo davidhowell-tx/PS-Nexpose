@@ -5,9 +5,25 @@ function Get-NPAsset {
     #>
     [CmdletBinding(DefaultParameterSetName="All")]
     Param(
-        [Parameter(Mandatory=$True,ParameterSetName="id")]
+        # Retrieve a specific asset by its ID
+        [Parameter(Mandatory=$True,ParameterSetName="AssetID")]
         [String]
-        $ID,
+        $AssetID,
+
+        # Retrieve assets for a specific Site
+        [Parameter(Mandatory=$True,ParameterSetName="SiteID")]
+        [String]
+        $SiteID,
+
+        # Retrieve assets for a specific Tag
+        [Parameter(Mandatory=$True,ParameterSetName="TagID")]
+        [String]
+        $TagID,
+
+        # Retrieve assets for a specific Vulnerability
+        [Parameter(Mandatory=$True,ParameterSetName="VulnerabilityID")]
+        [String]
+        $VulnerabilityID,
 
         # Specify to only retrieve a specific number of results
         [Parameter(Mandatory=$True,ParameterSetName="Count")]
@@ -20,9 +36,12 @@ function Get-NPAsset {
         $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object { $InitializationLog = $InitializationLog + " -$($_.Key) $($_.Value)"}
         Write-Log -Message $InitializationLog -Level Informational
 
-        $URI = "/api/3/assets"
-        if ($ID) {
-            $URI = $URI + "/$ID"
+        switch ($PSCmdlet.ParameterSetName) {
+            "AssetID" { $URI = "/api/3/assets/$AssetID" }
+            "SiteID" { $URI = "/api/3/sites/$SiteID/assets" }
+            "TagID" { $URI = "/api/3/tags/$TagID/assets" }
+            "VulnerabilityID" { $URI = "/api/3/vulnerabilities/$VulnerabilityID/assets" }
+            Default { $URI = "/api/3/assets" }
         }
 
         $Request = @{
@@ -35,12 +54,23 @@ function Get-NPAsset {
             $Request.Add("Recurse", $True)
         }
         $Response = Invoke-NPQuery @Request
+
+        switch ($PSCmdlet.ParameterSetName) {
+            "AssetID" {
+                $Assets = $Response
+            }
+            "TagID" {
+                $Assets = $Response.links | Where-Object { $_.rel -eq "Asset" } | ForEach-Object { Invoke-NPQuery -DirectLink $_.href }
+            }
+            "VulnerabilityID" {
+                $Assets = $Response.links | Where-Object { $_.rel -eq "Asset" } | ForEach-Object { Invoke-NPQuery -DirectLink $_.href }
+            }
+            Default {
+                $Assets = $Response.resources
+            }
+        }
         
         $DefaultDisplayFields = @("hostName","ip","os","id","riskScore","vulnerabilities")
-        if ($ID) {
-            Write-Output $Response | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Asset" -DefaultDisplayFields $DefaultDisplayFields
-        } else {
-            Write-Output $Response.resources | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Asset" -DefaultDisplayFields $DefaultDisplayFields
-        }
+        Write-Output $Assets | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Asset" -DefaultDisplayFields $DefaultDisplayFields
     }
 }
