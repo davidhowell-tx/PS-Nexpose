@@ -36,11 +36,11 @@ function Get-NPSite {
         }
         $Response = Invoke-NPQuery @Request
         
-        $DefaultDisplayFields = @("name", "id", "description", "type", "assets", "riskScore", "vulnerabilities", "lastScanTime")
         if ($ID) {
-            Write-Output $Response | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Site" -DefaultDisplayFields $DefaultDisplayFields
+            $Sites = $Response
         } else {
-            Write-Output $Response.resources | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Site" -DefaultDisplayFields $DefaultDisplayFields
+            $Sites = $Response.resources
         }
+        Write-Output $Sites | Add-CustomType -CustomTypeName "Nexpose.Site"
     }
 }

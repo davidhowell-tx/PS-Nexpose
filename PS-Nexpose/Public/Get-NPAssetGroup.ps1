@@ -49,14 +49,13 @@ function Get-NPAssetGroup {
             $Request.Add("Recurse", $True)
         }
 
-        
         $Response = Invoke-NPQuery @Request
 
-        $DefaultDisplayFields = @("name","id","type","assets","vulnerabilities")
         if ($ID) {
-            Write-Output $Response | Add-CustomTypeFormatting -CustomTypeName "Nexpose.AssetGroup" -DefaultDisplayFields $DefaultDisplayFields
+            $AssetGroups = $Response
         } else {
-            Write-Output $Response.resources | Add-CustomTypeFormatting -CustomTypeName "Nexpose.AssetGroup" -DefaultDisplayFields $DefaultDisplayFields
+            $AssetGroups = $Response.resources
         }
+        Write-Output $AssetGroups | Add-CustomType -CustomTypeName "Nexpose.AssetGroup"
     }
 }
