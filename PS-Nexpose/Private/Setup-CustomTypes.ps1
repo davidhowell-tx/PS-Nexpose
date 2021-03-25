@@ -17,6 +17,9 @@ Update-TypeData -TypeName "Nexpose.MalwareKit" -DefaultDisplayPropertySet @("nam
 # Nexpose.ScanEngine
 Update-TypeData -TypeName "Nexpose.ScanEngine" -DefaultDisplayPropertySet @("name","address","port","status","id","productVersion","contentVersion","lastRefreshedDate","lastUpdatedDate")
 
+# Nexpose.ScanEnginePool
+Update-TypeData -TypeName "Nexpose.ScanEnginePool" -DefaultDisplayPropertySet @("name","id","engines")
+
 # Nexpose.Site
 Update-TypeData -TypeName "Nexpose.Site" -DefaultDisplayPropertySet @("name", "id", "description", "type", "assets", "riskScore", "vulnerabilities", "lastScanTime")
 
