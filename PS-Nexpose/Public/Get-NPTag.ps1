@@ -5,9 +5,25 @@ function Get-NPTag {
     #>
     [CmdletBinding(DefaultParameterSetName="All")]
     Param(
-        [Parameter(Mandatory=$True,ParameterSetName="id")]
+        # Retrieve a specific tag by its ID
+        [Parameter(Mandatory=$True,ParameterSetName="TagID")]
         [String]
-        $ID,
+        $TagID,
+
+        # Retrieve tags for a specific asset
+        [Parameter(Mandatory=$True,ParameterSetName="AssetID")]
+        [String]
+        $AssetID,
+
+        # Retrieve tags for a specific asset group
+        [Parameter(Mandatory=$True,ParameterSetName="AssetGroupID")]
+        [String]
+        $AssetGroupID,
+
+        # Retrieve tags for a specific site
+        [Parameter(Mandatory=$True,ParameterSetName="SiteID")]
+        [String]
+        $SiteID,
 
         # Specify to only retrieve a specific number of results
         [Parameter(Mandatory=$True,ParameterSetName="Count")]
@@ -20,9 +36,12 @@ function Get-NPTag {
         $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object { $InitializationLog = $InitializationLog + " -$($_.Key) $($_.Value)"}
         Write-Log -Message $InitializationLog -Level Informational
 
-        $URI = "/api/3/tags"
-        if ($ID) {
-            $URI = $URI + "/$ID"
+        switch ($PSCmdlet.ParameterSetName) {
+            "AssetID" { $URI = "/api/3/assets/$AssetID/tags" }
+            "AssetGroupID" { $URI = "/api/3/asset_groups/$AssetGroupID/tags"}
+            "SiteID" { $URI = "/api/3/sites/$SiteID/tags" }
+            "TagID" { $URI = "/api/3/tags/$TagID" }
+            Default { $URI = "/api/3/tags" }
         }
 
         $Request = @{
@@ -36,11 +55,11 @@ function Get-NPTag {
         }
         $Response = Invoke-NPQuery @Request
 
-        if ($ID) {
-            $Tags = $Response
-        } else {
-            $Tags = $Response.resources
+        switch ($PSCmdlet.ParameterSetName) {
+            "TagID" { $Tags = $Response }
+            Default { $Tags = $Response.resources }
         }
+        
         Write-Output $Tags | Add-CustomType -CustomTypeName "Nexpose.Tag"
     }
 }
