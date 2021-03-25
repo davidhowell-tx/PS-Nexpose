@@ -5,9 +5,15 @@ function Get-NPSite {
     #>
     [CmdletBinding(DefaultParameterSetName="All")]
     Param(
-        [Parameter(Mandatory=$True,ParameterSetName="id")]
+        # Retrieve a specific site by its ID
+        [Parameter(Mandatory=$True,ParameterSetName="SiteID")]
         [String]
-        $ID,
+        $SiteID,
+
+        # Retrieve sites related to a specific tag
+        [Parameter(Mandatory=$True,ParameterSetName="TagID")]
+        [String]
+        $TagID,
 
         # Specify to only retrieve a specific number of results
         [Parameter(Mandatory=$True,ParameterSetName="Count")]
@@ -20,9 +26,10 @@ function Get-NPSite {
         $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object { $InitializationLog = $InitializationLog + " -$($_.Key) $($_.Value)"}
         Write-Log -Message $InitializationLog -Level Informational
 
-        $URI = "/api/3/sites"
-        if ($ID) {
-            $URI = $URI + "/$ID"
+        switch ($PSCmdlet.ParameterSetName) {
+            "SiteID" { $URI = "/api/3/sites/$SiteID" }
+            "TagID" { $URI = "/api/3/tags/$TagID/sites" }
+            Default { $URI = "/api/3/sites" }
         }
 
         $Request = @{
@@ -35,12 +42,12 @@ function Get-NPSite {
             $Request.Add("Recurse", $True)
         }
         $Response = Invoke-NPQuery @Request
-        
-        if ($ID) {
-            $Sites = $Response
-        } else {
-            $Sites = $Response.resources
+
+        switch ($PSCmdlet.ParameterSetName) {
+            "SiteID" { $Sites = $Response }
+            Default { $Sites = $Response.resources }
         }
+        
         Write-Output $Sites | Add-CustomType -CustomTypeName "Nexpose.Site"
     }
 }
