@@ -5,18 +5,26 @@ function Get-NPAssetGroup {
     #>
     [CmdletBinding(DefaultParameterSetName="All")]
     Param(
-        [Parameter(Mandatory=$True,ParameterSetName="id")]
+        # Retrieve a specific Asset Group by its ID
+        [Parameter(Mandatory=$True,ParameterSetName="AssetGroupID")]
         [String]
-        $ID,
+        $AssetGroupID,
+
+        # Retrieve Asset Groups related to a specific Tag
+        [Parameter(Mandatory=$True,ParameterSetName="TagID")]
+        [String]
+        $TagID,
 
         # Filter results by asset group type (static, dynamic)
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False,ParameterSetName="All")]
+        [Parameter(Mandatory=$False,ParameterSetName="Count")]
         [ValidateSet("dynamic", "static")]
         [String]
         $Type,
 
         # Filter results by case insensitive search string
-        [Parameter(Mandatory=$False)]
+        [Parameter(Mandatory=$False,ParameterSetName="All")]
+        [Parameter(Mandatory=$False,ParameterSetName="Count")]
         [String]
         $Name,
 
@@ -31,10 +39,12 @@ function Get-NPAssetGroup {
         $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object { $InitializationLog = $InitializationLog + " -$($_.Key) $($_.Value)"}
         Write-Log -Message $InitializationLog -Level Informational
 
-        $URI = "/api/3/asset_groups"
-        if ($ID) {
-            $URI = $URI + "/$ID"
+        switch ($PSCmdlet.ParameterSetName) {
+            "AssetGroupID" { $URI = "/api/3/asset_groups/$AssetGroupID" }
+            "TagID" { $URI = "/api/3/tags/$TagID/asset_groups" }
+            Default { $URI = "/api/3/asset_groups" }
         }
+
         $Parameters = @{}
         if ($Type) { $Parameters.Add("type", $Type) }
         if ($Name) { $Parameters.Add("name", $Name) }
@@ -51,11 +61,11 @@ function Get-NPAssetGroup {
 
         $Response = Invoke-NPQuery @Request
 
-        if ($ID) {
-            $AssetGroups = $Response
-        } else {
-            $AssetGroups = $Response.resources
+        switch ($PSCmdlet.ParameterSetName) {
+            "AssetGroupID" { $AssetGroups = $Response }
+            Default { $AssetGroups = $Response.resources }
         }
+
         Write-Output $AssetGroups | Add-CustomType -CustomTypeName "Nexpose.AssetGroup"
     }
 }
