@@ -11,6 +11,9 @@ Update-TypeData -TypeName "Nexpose.AssetGroup" -DefaultDisplayPropertySet @("nam
 # Nexpose.Exploit
 Update-TypeData -TypeName "Nexpose.Exploit" -DefaultDisplayPropertySet @("title","id","skillLevel","source")
 
+# Nexpose.MalwareKit
+Update-TypeData -TypeName "Nexpose.MalwareKit" -DefaultDisplayPropertySet @("name","id","popularity")
+
 # Nexpose.Site
 Update-TypeData -TypeName "Nexpose.Site" -DefaultDisplayPropertySet @("name", "id", "description", "type", "assets", "riskScore", "vulnerabilities", "lastScanTime")
 
