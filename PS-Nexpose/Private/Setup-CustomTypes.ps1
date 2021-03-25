@@ -16,4 +16,5 @@ Update-TypeData -TypeName "Nexpose.Tag" -DefaultDisplayPropertySet @("name","id"
 
 # Nexpose.Vulnerability
 Update-TypeData -TypeName "Nexpose.Vulnerability" -MemberType "ScriptProperty" -MemberName "cvssv3score" -Value {$this.cvss.v3.score}
-Update-TypeData -TypeName "Nexpose.Vulnerability" -DefaultDisplayPropertySet @("id","title","cvssv3score","published","modified","riskScore","exploits","malwarekits")
+Update-TypeData -TypeName "Nexpose.Vulnerability" -MemberType "ScriptProperty" -MemberName "info" -Value {$this.description.text}
+Update-TypeData -TypeName "Nexpose.Vulnerability" -DefaultDisplayPropertySet @("id","title","info","cvssv3score","published","modified","riskScore","exploits","malwarekits")
