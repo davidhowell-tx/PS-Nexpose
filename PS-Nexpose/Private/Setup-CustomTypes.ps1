@@ -8,6 +8,9 @@ Update-TypeData -TypeName "Nexpose.Asset" -DefaultDisplayPropertySet @("hostName
 # Nexpose.AssetGroup
 Update-TypeData -TypeName "Nexpose.AssetGroup" -DefaultDisplayPropertySet @("name","id","type","assets","vulnerabilities")
 
+# Nexpose.Exploit
+Update-TypeData -TypeName "Nexpose.Exploit" -DefaultDisplayPropertySet @("title","id","skillLevel","source")
+
 # Nexpose.Site
 Update-TypeData -TypeName "Nexpose.Site" -DefaultDisplayPropertySet @("name", "id", "description", "type", "assets", "riskScore", "vulnerabilities", "lastScanTime")
 
