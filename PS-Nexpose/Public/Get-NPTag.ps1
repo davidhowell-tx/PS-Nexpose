@@ -35,12 +35,12 @@ function Get-NPTag {
             $Request.Add("Recurse", $True)
         }
         $Response = Invoke-NPQuery @Request
-        
-        $DefaultDisplayFields = @("name","id","type","source")
+
         if ($ID) {
-            Write-Output $Response | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Tag" -DefaultDisplayFields $DefaultDisplayFields
+            $Tags = $Response
         } else {
-            Write-Output $Response.resources | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Tag" -DefaultDisplayFields $DefaultDisplayFields
+            $Tags = $Response.resources
         }
+        Write-Output $Tags | Add-CustomType -CustomTypeName "Nexpose.Tag"
     }
 }

@@ -70,7 +70,6 @@ function Get-NPAsset {
             }
         }
         
-        $DefaultDisplayFields = @("hostName","ip","os","id","riskScore","vulnerabilities")
-        Write-Output $Assets | Add-CustomTypeFormatting -CustomTypeName "Nexpose.Asset" -DefaultDisplayFields $DefaultDisplayFields
+        Write-Output $Assets | Add-CustomType -CustomTypeName "Nexpose.Asset"
     }
 }
